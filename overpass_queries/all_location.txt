@@ -6,9 +6,11 @@
   
   // Charity shops
   nwr["shop"="charity"](44.88, 5.57, 45.32, 5.90);
+  nwr["office"="charity"](44.88, 5.57, 45.32, 5.90);
   
   // Second hand shops
   nwr["shop"="second_hand"](44.88, 5.57, 45.32, 5.90);
+  nwr["shop"]["second_hand"="yes"](44.88, 5.57, 45.32, 5.90);
   
   // Emmaüs shops
   nwr["shop"]["name"~"Emmaüs"](44.88, 5.57, 45.32, 5.90);
@@ -21,5 +23,19 @@
   
   // Second hand bicycle shops
   nwr["service:bicycle:second_hand"="yes"](44.88, 5.57, 45.32, 5.90);
+
+  // Public bookcases
+  nwr["amenity"="public_bookcase"](44.88, 5.57, 45.32, 5.90);
+
+  // Le Thé à Coudre
+  way(35074179);
+  // La matériauthèque
+  node(7318883432);
+  // Lili Rose
+  node(6721202494);
+  // Cookies
+  node(4424974276);
+  // Opus Dépôt Vente
+  node(2370550988);
 );
 out center tags;
