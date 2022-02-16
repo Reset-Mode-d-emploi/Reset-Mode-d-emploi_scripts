@@ -1,4 +1,8 @@
 {
+    "files.exclude": {
+        "**/.git": true,
+        "**/__pycache__/": true
+    },
     "python.formatting.provider": "black",
     "editor.formatOnSave": true,
     "python.linting.flake8Enabled": true,

@@ -20,7 +20,7 @@ def get_args():
         description="Execute an overpass query and save the result in geojson"
     )
     parser.add_argument(
-        "query_path", type=str, help="Path of the file containing the query to execute"
+        "query_path", type=str, help="Path of the file containing the overpass query to execute"
     )
     parser.add_argument(
         "output_path",
@@ -30,7 +30,7 @@ def get_args():
     return parser.parse_args()
 
 
-def main(query_path: str, output_path: str):
+def overpass_query(query_path: str, output_path: str):
     with open(query_path, "r") as f:
         query_lines = f.readlines()
     query = ""
@@ -48,4 +48,4 @@ def main(query_path: str, output_path: str):
 
 if __name__ == "__main__":
     args = get_args()
-    main(args.query_path, args.output_path)
+    overpass_query(args.query_path, args.output_path)

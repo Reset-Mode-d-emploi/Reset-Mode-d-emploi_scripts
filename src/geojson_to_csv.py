@@ -29,7 +29,7 @@ def get_args():
     return parser.parse_args()
 
 
-def main(input: str):
+def geojson_to_csv(input: str):
     # Read geojson file
     with open(input, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -80,4 +80,4 @@ def main(input: str):
 
 if __name__ == "__main__":
     args = get_args()
-    main(args.input_file)
+    geojson_to_csv(args.input_file)

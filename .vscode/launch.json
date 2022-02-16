@@ -33,5 +33,15 @@
                 "data/res_2022_02_03.csv"
             ]
         },
+        {
+            "name": "pipeline",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/pipeline.py",
+            "args": [
+                "overpass_queries/all_location.txt",
+                "data/Metro_2022_01_27.csv"
+            ]
+        },
     ]
 }

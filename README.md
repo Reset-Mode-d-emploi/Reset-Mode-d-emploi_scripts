@@ -42,6 +42,8 @@ For each script, you have a running example in [.vscode/launch.json](.vscode/lau
 python src/<script>.py -h
 ```
 
+The pipeline run overpass_query, then geojson_to_csv and finally conflate scripts.
+
 ## License
 
 The project has an [Apache-2.0 License](LICENSE).

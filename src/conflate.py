@@ -45,7 +45,7 @@ def get_column_names(columns: List[str], values_to_test: List[str]):
     raise Exception(f"No values in {values_to_test} are in {columns}")
 
 
-def main(data1_path: str, data2_path: str, tol: int, output_path: str):
+def conflate(data1_path: str, data2_path: str, tol: int, output_path: str):
     # Read data
     data1 = pd.read_csv(data1_path)
     lat_col_name_1 = get_column_names(data1.columns, POSSIBLE_LAT_COL_NAME)
@@ -104,4 +104,4 @@ def main(data1_path: str, data2_path: str, tol: int, output_path: str):
 
 if __name__ == "__main__":
     args = get_args()
-    main(args.data1_path, args.data2_path, args.tol, args.output_path)
+    conflate(args.data1_path, args.data2_path, args.tol, args.output_path)
