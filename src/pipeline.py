@@ -14,6 +14,7 @@ import os
 from conflate import conflate
 from geojson_to_csv import geojson_to_csv
 from overpass_query import overpass_query
+from reset_post_processing import reset_post_processing
 
 
 def get_args():
@@ -53,9 +54,11 @@ def pipeline(
     str_date = datetime.datetime.strftime(datetime.datetime.now(), "%Y_%m_%d")
     geojson_path = os.path.join("data", f"res_{str_date}.geojson")
     csv_path = os.path.join("data", f"res_{str_date}.csv")
+    merge_path = os.path.join("data", "merge.csv")
     overpass_query(query_path, geojson_path)
     geojson_to_csv(geojson_path, filter_file)
     conflate(data_path, csv_path, tol, output_path)
+    reset_post_processing(merge_path, merge_path)
 
 
 if __name__ == "__main__":

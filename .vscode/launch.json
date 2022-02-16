@@ -36,6 +36,12 @@
             ]
         },
         {
+            "name": "reset_post_processing",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/reset_post_processing.py",
+        },
+        {
             "name": "pipeline",
             "type": "python",
             "request": "launch",

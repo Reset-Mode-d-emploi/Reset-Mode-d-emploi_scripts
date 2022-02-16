@@ -2,6 +2,9 @@
 
 > Various scripts to get and process data for the project Reset Mode d'emploi 
 
+**N.B**: overpass_query, geojson_to_csv and conflate scripts are designed to be generic,
+so they can be used for other projects than Reset Mode d'emploi
+
 ## Installation
 
 I recommend you to install a Python environment with conda, virtualenv or pipenv.
@@ -44,7 +47,6 @@ python src/<script>.py -h
 
 The pipeline run overpass_query, then geojson_to_csv and finally conflate scripts.
 
-**N.B**: overpass_query, geojson_to_csv and conflate scripts are conceived to be generic, so they can be used for other projects than Reset Mode d'emploi.
 
 ## License
 
