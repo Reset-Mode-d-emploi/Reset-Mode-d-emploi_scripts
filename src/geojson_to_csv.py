@@ -12,24 +12,21 @@ import json
 import numpy as np
 import pandas as pd
 
-FIRST_TAGS = [
-    "service:bicycle:diy",
-    "service:bicycle:repair",
-    "service:bicycle:second_hand",
-    "shop",
-    "repair",
-]
-
 
 def get_args():
     parser = argparse.ArgumentParser(
         description="Convert the OSM GeoJSON input file into CSV"
     )
     parser.add_argument("input_file", type=str, help="Path of the file to convert")
+    parser.add_argument(
+        "-filter_file",
+        type=str,
+        help="Path of the file containing at each line a column to keep according wanted order",
+    )
     return parser.parse_args()
 
 
-def geojson_to_csv(input: str):
+def geojson_to_csv(input: str, filter_file: str):
     # Read geojson file
     with open(input, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -38,9 +35,6 @@ def geojson_to_csv(input: str):
     tag_occurences = dict()
     for element in data["elements"]:
         for tag in element["tags"].keys():
-            if tag in FIRST_TAGS:
-                # Some tags will be first
-                continue
             if tag in tag_occurences:
                 tag_occurences[tag] += 1
             else:
@@ -48,8 +42,6 @@ def geojson_to_csv(input: str):
     sorted_tags = [e[0] for e in sorted(tag_occurences.items(), key=lambda x: -x[1])]
     sorted_tags.insert(1, "lat")
     sorted_tags.insert(2, "lon")
-    for i in range(len(FIRST_TAGS)):
-        sorted_tags.insert(i + 3, FIRST_TAGS[i])
 
     # Store data in dataframe
     df = pd.DataFrame(columns=sorted_tags, index=np.arange(len(data["elements"])))
@@ -74,10 +66,16 @@ def geojson_to_csv(input: str):
 
         # TODO Query Nominatim to get adress if necessary
 
+    # Filter and order dataframe if wanted
+    if (filter_file is not None):
+        with open(filter_file, "r") as f:
+            new_columns = [line.replace("\n", "") for line in f.readlines()]
+        df = df[new_columns]
+
     # Export data to CSV
     df.to_csv(input.replace(".geojson", ".csv"), index=None, encoding="utf-8")
 
 
 if __name__ == "__main__":
     args = get_args()
-    geojson_to_csv(args.input_file)
+    geojson_to_csv(args.input_file, args.filter_file)

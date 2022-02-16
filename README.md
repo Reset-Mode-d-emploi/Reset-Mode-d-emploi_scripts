@@ -44,6 +44,8 @@ python src/<script>.py -h
 
 The pipeline run overpass_query, then geojson_to_csv and finally conflate scripts.
 
+**N.B**: overpass_query, geojson_to_csv and conflate scripts are conceived to be generic, so they can be used for other projects than Reset Mode d'emploi.
+
 ## License
 
 The project has an [Apache-2.0 License](LICENSE).

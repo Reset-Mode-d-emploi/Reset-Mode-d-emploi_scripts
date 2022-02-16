@@ -21,6 +21,8 @@
             "program": "${workspaceFolder}/src/geojson_to_csv.py",
             "args": [
                 "data/res_2022_02_03.geojson",
+                "-filter_file",
+                "filtering/filter_and_sort_locations.txt"
             ]
         },
         {

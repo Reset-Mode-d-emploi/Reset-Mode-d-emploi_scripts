@@ -31,6 +31,11 @@ def get_args():
         help="Path of the CSV file which will be conflated to get data",
     )
     parser.add_argument(
+        "-filter_file",
+        type=str,
+        help="Path of the file containing at each line a column to keep according wanted order",
+    )
+    parser.add_argument(
         "-tol", type=int, help="Tolerance for merging in meters", default=80
     )
     parser.add_argument(
@@ -42,15 +47,19 @@ def get_args():
     return parser.parse_args()
 
 
-def pipeline(query_path: str, data_path: str, tol: int, output_path: str):
+def pipeline(
+    query_path: str, data_path: str, filter_file: str, tol: int, output_path: str
+):
     str_date = datetime.datetime.strftime(datetime.datetime.now(), "%Y_%m_%d")
     geojson_path = os.path.join("data", f"res_{str_date}.geojson")
     csv_path = os.path.join("data", f"res_{str_date}.csv")
     overpass_query(query_path, geojson_path)
-    geojson_to_csv(geojson_path)
+    geojson_to_csv(geojson_path, filter_file)
     conflate(data_path, csv_path, tol, output_path)
 
 
 if __name__ == "__main__":
     args = get_args()
-    pipeline(args.query_path, args.data_path, args.tol, args.output_path)
+    pipeline(
+        args.query_path, args.data_path, args.filter_file, args.tol, args.output_path
+    )
