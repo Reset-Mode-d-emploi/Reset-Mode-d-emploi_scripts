@@ -5,6 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "overpass_query",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/overpass_query.py",
+            "args": [
+                "overpass_queries/all_location.txt",
+                "data/res_2022_02_16.geojson"
+            ]
+        },
+        {
             "name": "geojson_to_csv",
             "type": "python",
             "request": "launch",

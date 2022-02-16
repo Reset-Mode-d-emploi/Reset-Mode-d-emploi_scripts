@@ -36,6 +36,11 @@ pip install -r requirements.txt
 
 ## Usage
 
+For each script, you have a running example in [.vscode/launch.json](.vscode/launch.json) and you can it with the following command to get the documentation
+
+```
+python src/<script>.py -h
+```
 
 ## License
 

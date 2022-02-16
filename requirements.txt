@@ -1,4 +1,5 @@
 pandas>=1.1.5
 haversine>=2.5.1
+requests>=2.25.1
 black>=21.5b2
 flake8>=3.9.2

@@ -1,0 +1,25 @@
+// © 2022, Nicolas Grosjean, worked during the Grenoble CivicLab, Licensed under Creative Commons by SA 4.0
+[out:json][timeout:25];
+(
+  // Repair cafe
+  nwr["repair"="assisted_self_service"](44.88, 5.57, 45.32, 5.90);
+  
+  // Charity shops
+  nwr["shop"="charity"](44.88, 5.57, 45.32, 5.90);
+  
+  // Second hand shops
+  nwr["shop"="second_hand"](44.88, 5.57, 45.32, 5.90);
+  
+  // Emmaüs shops
+  nwr["shop"]["name"~"Emmaüs"](44.88, 5.57, 45.32, 5.90);
+  
+  // Repair bicycle by oneself
+  nwr["service:bicycle:diy"="yes"](44.88, 5.57, 45.32, 5.90);
+  
+   // Repair bicycle by professionnal
+  nwr["service:bicycle:repair"="yes"](44.88, 5.57, 45.32, 5.90);
+  
+  // Second hand bicycle shops
+  nwr["service:bicycle:second_hand"="yes"](44.88, 5.57, 45.32, 5.90);
+);
+out center tags;
