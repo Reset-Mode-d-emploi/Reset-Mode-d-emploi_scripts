@@ -43,7 +43,7 @@ OUTPUT_COLUMNS = [
     "lon",
     "Longitude",
     "type",
-    "id"
+    "id",
 ]
 
 
@@ -66,31 +66,51 @@ def get_args():
     return parser.parse_args()
 
 
-def reset_post_processing(input_path: str, output_path: str):
+def add_new_column_or_fillna(df: pd.DataFrame, col: str, filling="") -> None:
+    if col not in df.columns:
+        df[col] = filling
+    else:
+        df[col].fillna(filling)
+
+
+def reset_post_processing(input_path: str, output_path: str) -> None:
     df = pd.read_csv(input_path, encoding="utf-8")
 
     # Add objects which can be repaired by oneself
-    df["repair_oneself"] = ""
-    df.loc[df["service:bicycle:diy"] == "yes", "repair_oneself"] = "bicycle"
-    df.loc[df["repair"] == "assisted_self_service", "repair_oneself"] = "electronics"
+    add_new_column_or_fillna(df, "repair_oneself")
+    df.loc[
+        (df["service:bicycle:diy"] == "yes") & (df["repair_oneself"] == ""),
+        "repair_oneself",
+    ] = "bicycle"
+    df.loc[
+        (df["repair"] == "assisted_self_service") & (df["repair_oneself"] == ""),
+        "repair_oneself",
+    ] = "electronics"
 
     # Add objects which can be repaired by professionnal
-    df["repair_pro"] = ""
-    df.loc[df["service:bicycle:repair"] == "yes", "repair_pro"] = "bicycle"
+    add_new_column_or_fillna(df, "repair_pro")
+    df.loc[
+        (df["service:bicycle:repair"] == "yes") & (df["repair_pro"] == ""), "repair_pro"
+    ] = "bicycle"
 
     # Add objects which can be sold
-    df["sell"] = ""
-    df.loc[df["shop"] == "second_hand", "sell"] = "yes"
-    df.loc[df["second_hand"] == "yes", "sell"] = "yes"
+    add_new_column_or_fillna(df, "sell")
+    df.loc[(df["shop"] == "second_hand") & (df["sell"] == ""), "sell"] = "yes"
+    df.loc[(df["second_hand"] == "yes") & (df["sell"] == ""), "sell"] = "yes"
     df.loc[
-        (df["service:bicycle:second_hand"] == "yes") & (~pd.isnull(df["shop"])), "sell"
+        (df["service:bicycle:second_hand"] == "yes")
+        & (~pd.isnull(df["shop"]))
+        & (df["sell"] == ""),
+        "sell",
     ] = "bicycle"
 
     # Add objects which can be given
-    df["give"] = ""
-    df.loc[df["shop"] == "charity", "give"] = "yes"
-    df.loc[df["service:bicycle:second_hand"] == "yes", "give"] = "bicycle"
-    df.loc[df["amenity"] == "public_bookcase", "give"] = "book"
+    add_new_column_or_fillna(df, "give")
+    df.loc[(df["shop"] == "charity") & (df["give"] == ""), "give"] = "yes"
+    df.loc[
+        (df["service:bicycle:second_hand"] == "yes") & (df["give"] == ""), "give"
+    ] = "bicycle"
+    df.loc[(df["amenity"] == "public_bookcase") & (df["give"] == ""), "give"] = "book"
 
     # Export according defined columns
     df[OUTPUT_COLUMNS].to_csv(output_path, index=None, encoding="utf-8")

@@ -2,7 +2,7 @@
 
 > Various scripts to get and process data for the project Reset Mode d'emploi 
 
-**N.B**: overpass_query, geojson_to_csv and conflate scripts are designed to be generic,
+**N.B**: overpass_query, geojson_to_csv, csv_to_json and conflate scripts are designed to be generic,
 so they can be used for other projects than Reset Mode d'emploi
 
 ## Installation

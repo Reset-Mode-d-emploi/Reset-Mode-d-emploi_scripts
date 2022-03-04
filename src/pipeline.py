@@ -12,6 +12,7 @@ import datetime
 import os
 
 from conflate import conflate
+from csv_to_json import csv_to_json
 from geojson_to_csv import geojson_to_csv
 from overpass_query import overpass_query
 from reset_post_processing import reset_post_processing
@@ -40,29 +41,45 @@ def get_args():
         "-tol", type=int, help="Tolerance for merging in meters", default=80
     )
     parser.add_argument(
-        "-output_path",
+        "-output_path_csv",
         type=str,
-        help="Path of the pipeline result",
+        help="Path of the pipeline result CSV file",
         default="data/merge.csv",
+    )
+    parser.add_argument(
+        "-output_path_json",
+        type=str,
+        help="Path of the pipeline result JSON file",
+        default="data/merge.json",
     )
     return parser.parse_args()
 
 
 def pipeline(
-    query_path: str, data_path: str, filter_file: str, tol: int, output_path: str
+    query_path: str,
+    data_path: str,
+    filter_file: str,
+    tol: int,
+    output_path_csv: str,
+    output_path_json: str,
 ):
     str_date = datetime.datetime.strftime(datetime.datetime.now(), "%Y_%m_%d")
     geojson_path = os.path.join("data", f"res_{str_date}.geojson")
     csv_path = os.path.join("data", f"res_{str_date}.csv")
-    merge_path = os.path.join("data", "merge.csv")
     overpass_query(query_path, geojson_path)
     geojson_to_csv(geojson_path, filter_file)
-    conflate(data_path, csv_path, tol, output_path)
-    reset_post_processing(merge_path, merge_path)
+    conflate(data_path, csv_path, tol, output_path_csv)
+    reset_post_processing(output_path_csv, output_path_csv)
+    csv_to_json(output_path_csv, output_path_json)
 
 
 if __name__ == "__main__":
     args = get_args()
     pipeline(
-        args.query_path, args.data_path, args.filter_file, args.tol, args.output_path
+        args.query_path,
+        args.data_path,
+        args.filter_file,
+        args.tol,
+        args.output_path_csv,
+        args.output_path_json,
     )

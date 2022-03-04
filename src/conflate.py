@@ -12,8 +12,8 @@ from haversine import haversine
 from typing import List
 import pandas as pd
 
-POSSIBLE_LAT_COL_NAME = ["Latitude", "latitude", "lat", "Lat"]
-POSSIBLE_LON_COL_NAME = ["Longitude", "longitude", "lon", "Lon"]
+POSSIBLE_LAT_COL_NAME = ["lat", "Lat", "Latitude", "latitude"]
+POSSIBLE_LON_COL_NAME = ["lon", "Lon", "Longitude", "longitude"]
 POSSIBLE_NAME_COL_NAME = ["Name", "name", "Nom structure"]
 
 
@@ -78,7 +78,12 @@ def conflate(data1_path: str, data2_path: str, tol: int, output_path: str):
             data1.loc[i, "dist"] = dist_km.min()
             data2_id = dist_km.argmin()
             data2_ids_inner.add(data2_id)
-            new_line = pd.concat([data1.iloc[i], data2.iloc[data2_id]], axis=0)
+            exclusive_data1_columns = data1.columns[
+                ~pd.Series(data1.columns).isin(data2.columns)
+            ]
+            new_line = pd.concat(
+                [data1.iloc[i][exclusive_data1_columns], data2.iloc[data2_id]], axis=0
+            )
             res = pd.concat([res, new_line], axis=1, ignore_index=True)
         else:
             not_found_ids.append(i)

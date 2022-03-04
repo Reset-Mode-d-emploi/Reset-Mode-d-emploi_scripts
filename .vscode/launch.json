@@ -42,13 +42,25 @@
             "program": "${workspaceFolder}/src/reset_post_processing.py",
         },
         {
-            "name": "pipeline",
+            "name": "Initial Pipeline",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/src/pipeline.py",
             "args": [
                 "overpass_queries/all_location.txt",
                 "data/Metro_2022_01_27.csv"
+            ]
+        },
+        {
+            "name": "Update Pipeline",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/pipeline.py",
+            "args": [
+                "overpass_queries/all_location.txt",
+                "data/Reset_2022_02_16.csv",
+                "-tol",
+                "1"
             ]
         },
     ]
