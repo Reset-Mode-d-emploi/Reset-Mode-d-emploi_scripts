@@ -80,8 +80,8 @@ def reset_post_processing(input_path: str, output_path: str):
 
     # Add objects which can be sold
     df["sell"] = ""
-    df.loc[df["shop"] == "second_hand", "give"] = "yes"
-    df.loc[df["second_hand"] == "yes", "give"] = "yes"
+    df.loc[df["shop"] == "second_hand", "sell"] = "yes"
+    df.loc[df["second_hand"] == "yes", "sell"] = "yes"
     df.loc[
         (df["service:bicycle:second_hand"] == "yes") & (~pd.isnull(df["shop"])), "sell"
     ] = "bicycle"
