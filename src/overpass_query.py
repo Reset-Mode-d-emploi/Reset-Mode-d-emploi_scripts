@@ -12,7 +12,7 @@ import json
 import requests
 
 
-OVERPASS_ENDPOINT = "http://overpass-api.de/api/interpreter"
+OVERPASS_ENDPOINT = "http://overpass.kumi.systems/api/interpreter"
 
 
 def get_args():
